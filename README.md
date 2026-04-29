@@ -1,0 +1,70 @@
+# ecommerce-oop
+
+> Evolution of the [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) project. Rewriting the same e-commerce system from scratch using Spring Boot, JPA and PostgreSQL instead of pure OOP.
+
+## v2 — User
+
+This version implements only the User module as a REST API with database persistence.
+
+## Tech Stack
+
+- Java 26
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL
+
+## Endpoints
+
+### Create user
+```http
+POST /user
+Content-Type: application/json
+
+{
+  "username": "Betina",
+  "balance": 1042000.0
+}
+```
+
+### Get user by ID
+```http
+GET /user/{id}
+```
+
+### Get all users
+```http
+GET /user
+```
+
+## How to Run
+
+```bash
+# Clone the repository and switch to this branch
+git clone https://github.com/dout231q1/ecommerce-oop
+cd ecommerce-oop
+git checkout v2-spring/user
+
+# Create the database
+CREATE DATABASE ecommerce;
+
+# Configure your credentials in
+src/main/resources/application.properties
+
+# Run
+./mvnw spring-boot:run
+```
+
+## Requirements
+
+- JDK 17+
+- PostgreSQL
+
+## Project Evolution
+
+| Branch | Description |
+|--------|-------------|
+| [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) | Java OOP |
+| [v2-spring/user](https://github.com/dout231q1/ecommerce-oop/tree/v2-spring/user) | Spring Boot — User module |
+| v3-spring/product | Spring Boot — Product module |
+| v4-spring/cart | Spring Boot — Cart module |
+| v5-spring/order | Spring Boot — Order + Checkout |
