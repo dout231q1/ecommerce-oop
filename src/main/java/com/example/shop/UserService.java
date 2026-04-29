@@ -1,0 +1,26 @@
+package com.example.shop;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+    private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
+    public User findById(Long id){
+        return userRepository.findById(id).orElseThrow();
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public User save(User user){
+        return userRepository.save(user);
+    }
+}
