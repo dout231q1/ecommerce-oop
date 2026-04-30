@@ -1,5 +1,7 @@
-package com.example.shop;
+package com.example.shop.service;
 
+import com.example.shop.database.entity.User;
+import com.example.shop.database.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

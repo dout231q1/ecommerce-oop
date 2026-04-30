@@ -1,5 +1,7 @@
-package com.example.shop;
+package com.example.shop.controller;
 
+import com.example.shop.database.entity.Product;
+import com.example.shop.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

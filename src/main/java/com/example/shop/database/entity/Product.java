@@ -1,4 +1,4 @@
-package com.example.shop;
+package com.example.shop.database.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

@@ -1,5 +1,7 @@
-package com.example.shop;
+package com.example.shop.service;
 
+import com.example.shop.database.entity.Product;
+import com.example.shop.database.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,4 @@ public class ProductService {
         existing.updateFrom(product);
         return productRepository.save(existing);
     }
-
 }
