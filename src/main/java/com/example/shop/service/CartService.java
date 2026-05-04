@@ -6,6 +6,7 @@ import com.example.shop.database.entity.User;
 import com.example.shop.database.repository.CartRepository;
 import com.example.shop.database.repository.ProductRepository;
 import com.example.shop.database.repository.UserRepository;
+import com.example.shop.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CartService {
     }
 
     public Cart getCartByUser(Long userId){
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         Cart cart = cartRepository.getCartByUser(user);
         if(cart == null){
             cart = cartRepository.save(new Cart(user));
@@ -31,29 +32,29 @@ public class CartService {
     }
 
     public List<Product> addProductToCart(Long userId, Long productId){
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         Cart cart = cartRepository.getCartByUser(user);
         if(cart == null){
             cart = cartRepository.save(new Cart(user));
         }
-        Product product = productRepository.findById(productId).orElseThrow();
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
         cart.getProducts().add(product);
         return cartRepository.save(cart).getProducts();
     }
 
     public Cart removeProductFromCart(Long userId, Long productId){
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         Cart cart = cartRepository.getCartByUser(user);
         if(cart == null){
             cart = cartRepository.save(new Cart(user));
         }
-        Product product = productRepository.findById(productId).orElseThrow();
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
         cart.getProducts().remove(product);
         return cartRepository.save(cart);
     }
 
     public Double getTotalPrice(Long userId){
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         Cart cart = cartRepository.getCartByUser(user);
         if(cart == null){
             cart = cartRepository.save(new Cart(user));
