@@ -1,19 +1,37 @@
 # ecommerce-oop
 
-> Evolution of the [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) project.
-> Rewriting the same e-commerce system from scratch using Spring Boot, JPA and PostgreSQL.
+A study project built to learn Spring Boot in practice — starting from a pure Java OOP implementation and progressively rewriting it into a fully functional REST API.
 
-## v3 — Products
+Each version introduces a new module, keeping the changes small and the evolution clear.
 
-Everything from v2, now with a full product system. Products have three types —
-Electronics, Food and Clothing — each with their own fields and stored in separate
-tables using JPA's JOINED inheritance strategy.
+---
 
-`Product` is abstract, so you always have to specify a type. No generic products allowed.
-Each subclass implements `updateFrom()`, which keeps the update logic where it belongs —
-inside the class itself, not scattered across the service.
+## What it covers
+
+- REST API with Spring Boot
+- JPA entities with inheritance (`JOINED` strategy) and relationships (`@OneToOne`, `@ManyToMany`, `@ManyToOne`)
+- Service layer with business logic (balance validation, cart clearing on checkout)
+- Strategy pattern for payment methods
+- Error handling with custom exceptions
+
+---
+
+## Stack
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL
+
+---
 
 ## Endpoints
+
+### Users
+```http
+GET  /user/{id}
+POST /user
+```
 
 ### Products
 ```http
@@ -23,33 +41,39 @@ PUT    /products/{id}
 DELETE /products/{id}
 ```
 
-### Users (from v2)
+### Cart
 ```http
-GET  /user/{id}
-POST /user
+GET    /cart/{userId}
+POST   /cart/{userId}/product/{productId}/add
+DELETE /cart/{userId}/product/{productId}/remove
+GET    /cart/{userId}/total
 ```
 
-## Product types
-
-```json
-{ "type": "electronics", "name": "TV", "price": 500.0, "warrantyMonths": 12 }
-{ "type": "food", "name": "Rice", "price": 6.0, "expirationDate": "2026-12-31" }
-{ "type": "clothing", "name": "T-shirt", "price": 50.0, "clothingSize": "M" }
+### Order
+```http
+POST /order/checkout/{userId}?payment=Pix
+GET  /order/history/{userId}
 ```
+
+#### Payment methods
+```
+Pix
+Boleto
+Credit Card  (5% fee applied)
+```
+
+---
 
 ## How to Run
 
 ```bash
 git clone https://github.com/dout231q1/ecommerce-oop
 cd ecommerce-oop
-git checkout v3-spring/product
 # create the database, configure application.properties, then:
 ./mvnw spring-boot:run
 ```
 
-## Requirements
-- JDK 17+
-- PostgreSQL
+---
 
 ## Project Evolution
 
@@ -58,5 +82,5 @@ git checkout v3-spring/product
 | [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) | Pure Java OOP |
 | [v2-spring/user](https://github.com/dout231q1/ecommerce-oop/tree/v2-spring/user) | Spring Boot — User module |
 | [v3-spring/product](https://github.com/dout231q1/ecommerce-oop/tree/v3-spring/product) | Spring Boot — Product module |
-| v4-spring/cart | Spring Boot — Cart module |
-| v5-spring/order | Spring Boot — Order + Checkout |
+| [v4-spring/cart](https://github.com/dout231q1/ecommerce-oop/tree/v4-spring/cart) | Spring Boot — Cart module |
+| [v5-spring/order](https://github.com/dout231q1/ecommerce-oop/tree/v5-spring/order) | Spring Boot — Order + Checkout |
