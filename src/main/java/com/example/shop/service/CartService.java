@@ -65,4 +65,7 @@ public class CartService {
         }
         return totalPrice;
     }
+    public Cart save(Cart cart){
+        return cartRepository.save(cart);
+    }
 }
