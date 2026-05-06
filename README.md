@@ -3,46 +3,52 @@
 > Evolution of the [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) project.
 > Rewriting the same e-commerce system from scratch using Spring Boot, JPA and PostgreSQL.
 
-## v3 — Products
+## v5 — Order & Checkout
 
-Everything from v2, now with a full product system. Products have three types —
-Electronics, Food and Clothing — each with their own fields and stored in separate
-tables using JPA's JOINED inheritance strategy.
+Everything from v4, now with an order and checkout system.
 
-`Product` is abstract, so you always have to specify a type. No generic products allowed.
-Each subclass implements `updateFrom()`, which keeps the update logic where it belongs —
-inside the class itself, not scattered across the service.
+Checkout pulls the products directly from the user's cart, validates if the balance is enough, processes the payment and saves the order — all in a single transaction. If anything fails, nothing is committed.
+
+The payment system uses a strategy pattern. `PaymentMethod` is an interface, and each method implements its own logic. Pix and Boleto charge the exact total, Credit Card adds a 5% fee. The service just calls `pay()` and lets each implementation handle the math.
+
+After a successful checkout, the cart is cleared automatically.
 
 ## Endpoints
 
-### Products
+### Order
 ```http
+POST /order/checkout/{userId}?payment=Pix
+GET  /order/history/{userId}
+```
+
+### Payment methods
+```
+Pix
+Boleto
+Credit Card  (5% fee applied)
+```
+
+### Cart, Products & Users (from v4)
+```http
+GET    /cart/{userId}
+POST   /cart/{userId}/product/{productId}/add
+DELETE /cart/{userId}/product/{productId}/remove
+GET    /cart/{userId}/total
+
 GET    /products
 POST   /products
 PUT    /products/{id}
 DELETE /products/{id}
-```
 
-### Users (from v2)
-```http
 GET  /user/{id}
 POST /user
 ```
 
-## Product types
-
-```json
-{ "type": "electronics", "name": "TV", "price": 500.0, "warrantyMonths": 12 }
-{ "type": "food", "name": "Rice", "price": 6.0, "expirationDate": "2026-12-31" }
-{ "type": "clothing", "name": "T-shirt", "price": 50.0, "clothingSize": "M" }
-```
-
 ## How to Run
-
 ```bash
 git clone https://github.com/dout231q1/ecommerce-oop
 cd ecommerce-oop
-git checkout v3-spring/product
+git checkout v5-spring/order
 # create the database, configure application.properties, then:
 ./mvnw spring-boot:run
 ```
@@ -52,11 +58,10 @@ git checkout v3-spring/product
 - PostgreSQL
 
 ## Project Evolution
-
 | Branch | Description |
 |--------|-------------|
 | [v1-oop](https://github.com/dout231q1/ecommerce-oop/tree/v1-oop) | Pure Java OOP |
 | [v2-spring/user](https://github.com/dout231q1/ecommerce-oop/tree/v2-spring/user) | Spring Boot — User module |
 | [v3-spring/product](https://github.com/dout231q1/ecommerce-oop/tree/v3-spring/product) | Spring Boot — Product module |
-| v4-spring/cart | Spring Boot — Cart module |
+| [v4-spring/cart](https://github.com/dout231q1/ecommerce-oop/tree/v4-spring/cart) | Spring Boot — Cart module |
 | v5-spring/order | Spring Boot — Order + Checkout |
