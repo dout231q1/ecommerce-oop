@@ -18,6 +18,8 @@ inside the class itself, not scattered across the service.
 - Spring Boot
 - Spring Data JPA
 - PostgreSQL
+- Lombok
+- Bean Validation (jakarta.validation)
 
 ## Endpoints
 
